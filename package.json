@@ -20,6 +20,8 @@
     },
     "dependencies": {
         "@mdi/font": "^7.2.96",
+        "@popperjs/core": "^2.11.8",
+        "v-calendar": "^3.0.3",
         "vuetify": "^3.3.17"
     }
 }

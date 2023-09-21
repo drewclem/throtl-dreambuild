@@ -6,6 +6,10 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Team\IndexTeamController;
 use App\Http\Controllers\Form\IndexFormSettingsController;
+use App\Http\Controllers\Collection\EditCollectionController;
+use App\Http\Controllers\Collection\IndexCollectionController;
+use App\Http\Controllers\Collection\StoreCollectionController;
+use App\Http\Controllers\Collection\UpdateCollectionController;
 use App\Http\Controllers\Company\IndexCompanySettingsController;
 
 /*
@@ -28,9 +32,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/giveaways', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('giveaways');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/giveaways', IndexCollectionController::class)->name('giveaways');
+    Route::post('/giveaways/store', StoreCollectionController::class)->name('giveaways.store');
+    Route::get('/giveaways/edit/{collection}', EditCollectionController::class)->name('giveaways.edit');
+    Route::post('/giveaways/update/{collection}', UpdateCollectionController::class)->name('giveaways.update');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

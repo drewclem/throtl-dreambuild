@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('collections', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->timestamps();
+            // $table->foreignUuid('company_id')->constrained()->casecadeOnDelete();
             $table->date('open_date');
             $table->date('close_date');
             $table->string('name');

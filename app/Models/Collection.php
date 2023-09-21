@@ -16,5 +16,14 @@ class Collection extends Model
         'open_date',
         'close_date',
         'description',
+        'company_id',
+        'cta',
+        'subtitle',
+        'lowerBanner',
+    ];
+
+    protected $casts = [
+        'open_date' => 'date',
+        'close_date' => 'date',
     ];
 }

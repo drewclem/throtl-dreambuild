@@ -12,6 +12,7 @@ const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
+import { VDatePicker } from "vuetify/labs/VDatePicker";
 import * as directives from "vuetify/directives";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
 import "@mdi/font/css/materialdesignicons.css";
@@ -26,9 +27,17 @@ const throtlTheme = {
 
 const vuetify = createVuetify({
     ssr: true,
-    components,
+    components: {
+        ...components,
+        VDatePicker,
+    },
     directives,
-    theme: throtlTheme,
+    theme: {
+        defaultTheme: "throtlTheme",
+        themes: {
+            throtlTheme,
+        },
+    },
     icons: {
         defaultSet: "mdi",
         aliases,
