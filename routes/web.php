@@ -1,9 +1,12 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Team\IndexTeamController;
+use App\Http\Controllers\Form\IndexFormSettingsController;
+use App\Http\Controllers\Company\IndexCompanySettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/team', IndexTeamController::class)->name('team.index');
+    Route::get('/company-settings', IndexCompanySettingsController::class)->name('company-settings');
+    Route::get('/form-settings', IndexFormSettingsController::class)->name('form-settings');
 });
 
 require __DIR__ . '/auth.php';

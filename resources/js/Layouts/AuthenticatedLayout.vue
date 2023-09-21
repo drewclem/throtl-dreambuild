@@ -133,16 +133,15 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Content -->
             <main class="flex overflow-hidden">
-                <aside class="w-56 bg-white px-6 py-12">
+                <aside class="w-56 shrink-0 bg-white px-4 py-12">
                     <nav class="flex h-full">
                         <div class="flex flex-col h-full">
-                            <div class="flex-1">
+                            <div class="flex-1 space-y-3">
                                 <NavLink
                                     :href="route('giveaways')"
                                     :active="route().current('giveaways')"
                                 >
                                     <VIcon
-                                        size="large"
                                         icon="mdi-inbox-multiple"
                                         class="mr-3"
                                         :class="{
@@ -154,6 +153,67 @@ const showingNavigationDropdown = ref(false);
                                     />
                                     Giveaways
                                 </NavLink>
+
+                                <NavLink
+                                    :href="route('form-settings')"
+                                    :active="route().current('form-settings')"
+                                >
+                                    <VIcon
+                                        icon="mdi-clipboard-text"
+                                        class="mr-3"
+                                        :class="{
+                                            'text-primary-500':
+                                                route().current(
+                                                    'form-settings'
+                                                ),
+                                            'text-gray-300':
+                                                !route().current(
+                                                    'form-settings'
+                                                ),
+                                        }"
+                                    />
+                                    Form Settings
+                                </NavLink>
+
+                                <NavLink
+                                    :href="route('company-settings')"
+                                    :active="
+                                        route().current('company-settings')
+                                    "
+                                >
+                                    <VIcon
+                                        icon="mdi-tools"
+                                        class="mr-3"
+                                        :class="{
+                                            'text-primary-500':
+                                                route().current(
+                                                    'company-settings'
+                                                ),
+                                            'text-gray-300':
+                                                !route().current(
+                                                    'company-settings'
+                                                ),
+                                        }"
+                                    />
+                                    Company Settings
+                                </NavLink>
+
+                                <NavLink
+                                    :href="route('team.index')"
+                                    :active="route().current('team.index')"
+                                >
+                                    <VIcon
+                                        icon="mdi-account-group"
+                                        class="mr-3"
+                                        :class="{
+                                            'text-primary-500':
+                                                route().current('team.index'),
+                                            'text-gray-300':
+                                                !route().current('team.index'),
+                                        }"
+                                    />
+                                    Team
+                                </NavLink>
                             </div>
 
                             <div>
@@ -162,7 +222,6 @@ const showingNavigationDropdown = ref(false);
                                     :active="route().current('profile.edit')"
                                 >
                                     <VIcon
-                                        size="large"
                                         icon="mdi-account"
                                         class="mr-3"
                                         :class="{
@@ -177,11 +236,7 @@ const showingNavigationDropdown = ref(false);
                                     Profile
                                 </NavLink>
                                 <NavLink :href="route('logout')" method="post">
-                                    <VIcon
-                                        size="large"
-                                        icon="mdi-logout"
-                                        class="mr-3"
-                                    />
+                                    <VIcon icon="mdi-logout" class="mr-3" />
                                     Log Out
                                 </NavLink>
                             </div>
@@ -189,7 +244,7 @@ const showingNavigationDropdown = ref(false);
                     </nav>
                 </aside>
 
-                <div class="px-12">
+                <div class="px-12 overflow-y-scroll w-full">
                     <slot />
                 </div>
             </main>
