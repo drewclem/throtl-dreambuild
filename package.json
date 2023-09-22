@@ -19,6 +19,8 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
+        "@cloudinary/url-gen": "^1.11.2",
+        "@cloudinary/vue": "^1.11.2",
         "@mdi/font": "^7.2.96",
         "@popperjs/core": "^2.11.8",
         "v-calendar": "^3.0.3",

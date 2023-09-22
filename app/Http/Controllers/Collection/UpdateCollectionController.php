@@ -10,6 +10,8 @@ class UpdateCollectionController extends Controller
 {
     public function __invoke(Request $request, Collection $collection)
     {
+
+        // dd($request);
         $request->validate([
             'name' => 'required|string|max:255',
             'start' => 'nullable|date',
@@ -28,11 +30,11 @@ class UpdateCollectionController extends Controller
             'lowerBanner' => $request->lowerBanner,
         ]);
 
-        // if ($request->hasFile('image')) {
-        //     $collection->update([
-        //         'image' => $request->file('image')->store('public/collections')
-        //     ]);
-        // }
+        if ($request->hasFile('image')) {
+            $collection->update([
+                'image' => $request->file('image')->store('public/collections')
+            ]);
+        }
 
         return redirect()->route('giveaways.edit', $collection)->with('success', 'Collection updated.');
     }

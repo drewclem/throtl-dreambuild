@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { AdvancedImage } from '@cloudinary/vue'
 const emit = defineEmits(['files-dropped'])
 
 let active = ref(false)
@@ -55,7 +56,12 @@ onUnmounted(() => {
 
 <style>
 .drop-area {
-  @apply text-center border border-dashed border-gray-300 py-20;
+  @apply text-center border border-dashed border-gray-300;
+  min-height: 150px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .drop-area label input {

@@ -12,14 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('submissions', function (Blueprint $table) {
-            $table->foreignId('id')->primary();
+            $table->uuid('id')->primary();
             $table->timestamps();
             $table->foreignUuid('collection_id')->constrained();
             $table->boolean('is_winner')->default(false);
             $table->string('name');
             $table->string('email');
-            $table->string('phone_number');
-            $table->text('comments')->nullable();
         });
     }
 

@@ -45,10 +45,10 @@
             <div class="flex flex-col">
               <h3 class="text-2xl mb-8">Settings</h3>
 
-              <VCard class="bg-white w-full">
+              <div class="bg-white w-full drop-shadow-lg">
                 <VContainer class="pa-12">
-                  <div class="grid lg:grid-cols-2 gap-6">
-                    <VForm class="flex flex-col space-y-4">
+                  <div class="grid xl:grid-cols-2 gap-6">
+                    <form class="flex flex-col space-y-4" @submit.prevent="handleUpdate">
                       <h4 class="font-semibold text-lg">Info</h4>
 
                       <div>
@@ -90,7 +90,11 @@
                       <div>
                         <h4 class="opacity-60 mb-4">Add an Image</h4>
                         <FileUploader @files-dropped="addFiles" #default="{ dropZoneActive }">
-                          <label class="text-sm" for="file-input">
+                          <label
+                            class="text-sm"
+                            :class="files.length > 0 ? 'hidden' : ''"
+                            for="file-input"
+                          >
                             <span v-if="dropZoneActive">
                               <span> Drop Them Here </span>
                             </span>
@@ -107,10 +111,15 @@
                               type="file"
                               id="file-input"
                               accept="image/*"
-                              multiple
                               @change="onInputChange"
                             />
                           </label>
+
+                          <FilePreview
+                            v-if="files.length > 0"
+                            :file="files[0]"
+                            @remove="removeFile"
+                          />
                         </FileUploader>
                       </div>
 
@@ -137,17 +146,39 @@
                       </div>
 
                       <div>
-                        <VBtn color="primary" variant="flat" rounded="0" @click="handleUpdate">
+                        <VBtn color="primary" variant="flat" rounded="0" type="submit">
                           Update
                         </VBtn>
                       </div>
-                    </VForm>
+                    </form>
                     <div>
-                      <h4 class="font-semibold text-lg">Preview</h4>
+                      <h4 class="font-semibold text-lg mb-6">Preview</h4>
+
+                      <div>
+                        <GiveawayPreview
+                          :name="form.name"
+                          :cta="form.cta"
+                          :subtitle="form.subtitle"
+                          :lowerBanner="form.lowerBanner"
+                          :image="
+                            files.length > 0
+                              ? files[0].url
+                              : 'https://i.pinimg.com/1200x/8e/47/aa/8e47aa3e621489a3f74a5edc34a1a7ab.jpg'
+                          "
+                        />
+                      </div>
+
+                      <a
+                        class="block ml-auto pt-3 text-primary-500 underline"
+                        :href="route('giveaways.show', props.giveaway.id)"
+                        target="_blank"
+                      >
+                        <p>View</p>
+                      </a>
                     </div>
                   </div>
                 </VContainer>
-              </VCard>
+              </div>
             </div>
           </VWindowItem>
         </VWindow>
@@ -157,12 +188,15 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { Link, Head, useForm } from '@inertiajs/vue3'
+import useFileList from '@/utils/file-list'
+
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import FileUploader from '@/Components/FileUploader.vue'
 import DatePicker from '@/Components/DatePicker.vue'
-import useFileList from '@/utils/file-list'
+import GiveawayPreview from '@/Components/GiveawayPreview.vue'
+import FilePreview from '@/Components/FilePreview.vue'
 
 const props = defineProps({
   giveaway: {
@@ -175,6 +209,8 @@ const tab = ref('submissions')
 
 const { files, addFiles, removeFile } = useFileList()
 
+console.log(files.value)
+
 const form = useForm({
   name: props.giveaway.name,
   cta: props.giveaway.cta,
@@ -182,7 +218,7 @@ const form = useForm({
   lowerBanner: props.giveaway.lowerBanner,
   start: new Date(props.giveaway.open_date),
   end: new Date(props.giveaway.close_date),
-  files: files
+  image: files
 })
 
 function handleUpdate() {
