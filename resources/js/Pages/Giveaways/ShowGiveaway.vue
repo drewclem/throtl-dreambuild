@@ -51,6 +51,7 @@
           <TextareaField
             label="Why should we pick you? (100 words or less)"
             hint="(100 words or less)"
+            maxlength="100"
             v-model="form.why"
             :error-messages="form.errors.why"
           />
@@ -193,7 +194,7 @@ const form = useForm({
 
 function handleSubmit() {
   form.post(route('submissions.store', props.giveaway.id), {
-    onFinish: () => {
+    onSuccess: () => {
       form.reset()
     }
   })

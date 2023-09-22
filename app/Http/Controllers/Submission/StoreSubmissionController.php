@@ -14,7 +14,7 @@ class StoreSubmissionController extends Controller
 
         $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:submissions:id',
             'why' => 'required|max:100',
             'throtl_username' => 'required|max:255',
             'active_vip' => 'required|boolean',
