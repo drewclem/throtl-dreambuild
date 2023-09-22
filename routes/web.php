@@ -8,6 +8,7 @@ use App\Http\Controllers\Team\IndexTeamController;
 use App\Http\Controllers\Form\IndexFormSettingsController;
 use App\Http\Controllers\Collection\EditCollectionController;
 use App\Http\Controllers\Collection\ShowCollectionController;
+use App\Http\Controllers\Submission\ShowSubmissionController;
 use App\Http\Controllers\Collection\IndexCollectionController;
 use App\Http\Controllers\Collection\StoreCollectionController;
 use App\Http\Controllers\Submission\StoreSubmissionController;
@@ -42,6 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/giveaways/{collection}/show', ShowCollectionController::class)->name('giveaways.show');
 
     Route::post('/giveaways/{collection}/submissions', StoreSubmissionController::class)->name('submissions.store');
+    Route::get('/giveaways/{collection}/submission/{submission}/show', ShowSubmissionController::class)->name('submissions.show');
 });
 
 Route::middleware('auth')->group(function () {

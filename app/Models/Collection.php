@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use PhpParser\Node\Expr\Cast\Bool_;
 
@@ -31,7 +32,7 @@ class Collection extends Model
 
     public function submissions(): HasMany
     {
-        return $this->hasMany(Submission::class);
+        return $this->hasMany(Submission::class)->orderby('created_at', 'desc');
     }
 
     public function scopeActive($query)
@@ -45,5 +46,10 @@ class Collection extends Model
     public function scopeIsActive($query): Bool
     {
         return $this->open_date <= now() && $this->close_date >= now();
+    }
+
+    public function winner(): HasOne
+    {
+        return $this->hasOne(Submission::class, 'id', 'winner_id');
     }
 }

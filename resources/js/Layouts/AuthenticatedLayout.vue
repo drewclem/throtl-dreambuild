@@ -113,7 +113,7 @@ onUnmounted(() => {
     </div>
 
     <main class="lg:pl-[224px] bg-gray-50 min-h-screen">
-      <div class="max-w-7xl mx-auto p-6 lg:p-12">
+      <div class="mx-auto p-6 lg:p-12 max-w-[1440px]">
         <div class="border-b-2 border-gray-300 pb-6 mb-12 lg:mb-24">
           <slot name="header" />
         </div>

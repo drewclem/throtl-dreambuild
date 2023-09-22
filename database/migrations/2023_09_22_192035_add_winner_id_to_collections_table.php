@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('collections', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->timestamps();
-            $table->date('open_date');
-            $table->date('close_date');
-            $table->string('name');
-            $table->text('description')->nullable();
+        Schema::table('collections', function (Blueprint $table) {
+            //
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('collections');
+        Schema::table('collections', function (Blueprint $table) {
+            //
+        });
     }
 };

@@ -65,8 +65,7 @@
 
           <TextareaField
             label="Why should we pick you? (100 words or less)"
-            hint="(100 words or less)"
-            maxlength="100"
+            :maxlength="100"
             v-model="form.why"
             :error-messages="form.errors.why"
           />
