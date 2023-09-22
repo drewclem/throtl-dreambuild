@@ -35,7 +35,22 @@
       </div>
     </section>
     <section class="lg:col-span-3 p-4 lg:p-12 overflow-y-scroll">
-      <VForm v-if="giveaway.is_active" class="my-12" @submit.prevent="handleSubmit">
+      <div v-if="page.props.ziggy.query.status === 'success'">
+        <div class="my-24 lg:mt-40">
+          <div class="flex flex-col space-y-6">
+            <h3 class="text-5xl font-semibold mb-4 text-primary-500">Application accepted!</h3>
+            <p class="text-xl opacity-75 lg:w-3/4">
+              We'll be reviewing all applications and selecting a winner soon!
+            </p>
+
+            <p>
+              In the meantime, check out the
+              <a class="font-semibold underline" href="https://www.throtl.com">throtl Shop!</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <VForm v-else-if="giveaway.is_active" class="my-12" @submit.prevent="handleSubmit">
         <h3 class="text-2xl font-semibold mb-4">Basic Info</h3>
 
         <div class="flex flex-col space-y-6">
@@ -176,8 +191,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { Head, useForm } from '@inertiajs/vue3'
+import { computed, watch } from 'vue'
+import { Head, useForm, usePage } from '@inertiajs/vue3'
 import ApplicationLogo from '@/Components/ApplicationLogo.vue'
 
 import TextField from '@/Components/Form/TextField.vue'
@@ -189,6 +204,12 @@ const props = defineProps({
     required: true
   }
 })
+
+const page = usePage()
+
+if (page.props.ziggy.query?.status === 'success') {
+  console.log('here')
+}
 
 const imgSrc = computed(() => {
   return props.giveaway.image
@@ -218,11 +239,25 @@ const form = useForm({
   collection_id: giveaway.value.id
 })
 
-function handleSubmit() {
-  form.post(route('submissions.store', giveaway.value.id), {
-    onSuccess: () => {
+watch(
+  () => form.wasSuccessful,
+  (value) => {
+    if (value) {
       form.reset()
     }
+  }
+)
+
+watch(
+  () => giveaway.value,
+  (value) => {
+    form.collection_id = value.id
+  }
+)
+
+function handleSubmit() {
+  form.post(route('submissions.store', giveaway.value.id), {
+    preserveScroll: true
   })
 }
 </script>

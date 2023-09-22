@@ -58,7 +58,7 @@ class StoreSubmissionRequest extends FormRequest
         return [
             'name.required' => 'A name is required',
             'email.required' => 'An email is required',
-            'email.unique' => 'This email has already been used for this giveaway',
+            'email.unique' => 'Whoa! Looks like you already submitted.',
             'why.required' => $default,
             'throtl_username.required' => 'A throtl username or email is required',
             'active_vip.required' => 'This is a required field',

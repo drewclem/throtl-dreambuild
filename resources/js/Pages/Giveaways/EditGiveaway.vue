@@ -35,14 +35,14 @@
       <div class="w-full">
         <VWindow direction="vertical" v-model="tab">
           <VWindowItem value="submissions">
-            <div class="flex flex-col">
+            <div class="flex flex-col px-1 pb-4">
               <h3 class="text-2xl mb-9">Submissions</h3>
 
               <SubmissionsTable :submissions="submissions.data" />
             </div>
           </VWindowItem>
           <VWindowItem value="settings">
-            <div class="flex flex-col">
+            <div class="flex flex-col px-1 pb-4">
               <h3 class="text-2xl mb-8">Settings</h3>
 
               <div class="bg-white w-full drop-shadow-lg">

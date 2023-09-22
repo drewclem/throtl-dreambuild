@@ -29,10 +29,29 @@ defineOptions({
 })
 
 defineProps({
-  label: { type: String, required: true },
-  errorMessages: { type: String, required: false, default: null },
-  type: { type: String, required: false, default: 'text' },
-  hint: { type: String, required: false, default: '' }
+  modelValue: {
+    type: String,
+    required: true
+  },
+  label: {
+    type: String,
+    required: true
+  },
+  errorMessages: {
+    type: String,
+    required: false,
+    default: null
+  },
+  type: {
+    type: String,
+    required: false,
+    default: 'text'
+  },
+  hint: {
+    type: String,
+    required: false,
+    default: ''
+  }
 })
 
 const id = `text-field-${Math.random().toString(36).substr(2, 9)}`

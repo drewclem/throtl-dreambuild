@@ -4,7 +4,7 @@
   <AuthenticatedLayout>
     <template #header>
       <div class="flex justify-between items-center">
-        <h2 class="font-semibold text-4xl text-gray-800 leading-tight">Giveaways</h2>
+        <h2 class="font-semibold text-2xl lg:text-4xl text-gray-800 leading-tight">Giveaways</h2>
         <div>
           <CreateGiveawayModal />
         </div>
@@ -13,7 +13,7 @@
 
     <div>
       <div v-if="giveaways && giveaways.data.length > 0">
-        <ul class="grid grid-cols-4 gap-6">
+        <ul class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
           <li v-for="giveaway in giveaways.data" :key="giveaway.id">
             <Link :href="route('giveaways.edit', giveaway.id)" class="block">
               <div class="drop-shadow-lg">
