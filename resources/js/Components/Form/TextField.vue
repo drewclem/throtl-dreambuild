@@ -30,7 +30,6 @@ defineOptions({
 
 defineProps({
   label: { type: String, required: true },
-  value: { type: String, required: true },
   errorMessages: { type: String, required: false, default: null },
   type: { type: String, required: false, default: 'text' },
   hint: { type: String, required: false, default: '' }

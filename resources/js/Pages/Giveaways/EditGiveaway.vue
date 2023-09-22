@@ -38,34 +38,7 @@
             <div class="flex flex-col">
               <h3 class="text-2xl mb-9">Submissions</h3>
 
-              <div class="grid grid-cols-10 text-sm opacity-50 px-6 mb-6">
-                <p class="col-span-2">Name</p>
-                <p class="col-span-3">Car</p>
-                <p class="col-span-3">Email</p>
-                <p class="col-span ml-auto">Status</p>
-                <p class="ml-auto">Date</p>
-              </div>
-
-              <ul class="flex flex-col space-y-6">
-                <li v-for="submission in submissions.data" :key="submission.id">
-                  <div class="grid grid-cols-10 bg-white shadow-md p-6">
-                    <p class="col-span-2 font-semibold">{{ submission.name }}</p>
-                    <p class="col-span-3 opacity-75">{{ submission.car }}</p>
-                    <p class="col-span-3 opacity-75">{{ submission.email }}</p>
-                    <p class="col-span ml-auto">
-                      <span
-                        class="bg-primary-200 px-3 py-2 rounded-full"
-                        :class="{
-                          'bg-primary-200 text-primary-600': submission.active_vip,
-                          'bg-gray-200 text-gray-600': !submission.active_vip
-                        }"
-                        >{{ submission.active_vip ? 'VIP' : 'Buster' }}</span
-                      >
-                    </p>
-                    <p class="ml-auto">{{ submission.created_at }}</p>
-                  </div>
-                </li>
-              </ul>
+              <SubmissionsTable :submissions="submissions.data" />
             </div>
           </VWindowItem>
           <VWindowItem value="settings">
@@ -224,6 +197,7 @@ import FileUploader from '@/Components/FileUploader.vue'
 import DatePicker from '@/Components/DatePicker.vue'
 import GiveawayPreview from '@/Components/GiveawayPreview.vue'
 import FilePreview from '@/Components/FilePreview.vue'
+import SubmissionsTable from '@/Components/Submissions/SubmissionsTable.vue'
 
 const props = defineProps({
   giveaway: {

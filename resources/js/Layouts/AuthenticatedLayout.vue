@@ -32,7 +32,7 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <nav class="flex h-full px-4 py-12 bg-white">
+        <nav class="flex h-full px-4 py-12 bg-white border-r">
           <div class="flex flex-col h-full">
             <div class="flex-1 space-y-3">
               <NavLink :href="route('giveaways')" :active="route().current('giveaways')">

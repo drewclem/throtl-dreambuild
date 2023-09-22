@@ -1,8 +1,8 @@
 <template>
   <Head :title="giveaway.name" />
-  <div class="h-screen grid grid-cols-5">
-    <section class="col-span-2 relative">
-      <header class="relative z-20 flex w-full justify-between items-center pr-12">
+  <div class="lg:h-screen grid lg:grid-cols-5">
+    <section class="lg:col-span-2 relative">
+      <header class="relative z-20 flex w-full justify-between items-center pr-4 lg:pr-12">
         <div class="relative flex items-center justify-center w-32">
           <div class="absolute inset-0 bg-primary-500 z-10 -skew-x-6 -ml-3" />
           <ApplicationLogo class="block h-32 w-auto fill-current text-white z-20" />
@@ -19,7 +19,7 @@
         </div>
       </header>
 
-      <div class="relative z-10 flex flex-col w-full py-24 px-12">
+      <div class="relative z-10 flex flex-col w-full py-24 p-4 lg:px-12">
         <p class="text-2xl text-white font-semibold">{{ giveaway.name }}</p>
         <h2 v-if="giveaway.cta" class="text-5xl font-semibold text-white leading-snug">
           {{ giveaway.cta }}
@@ -34,8 +34,8 @@
         <p>{{ giveaway.lowerBanner }}</p>
       </div>
     </section>
-    <section class="col-span-3 p-12 overflow-y-scroll">
-      <VForm @submit.prevent="handleSubmit">
+    <section class="lg:col-span-3 p-4 lg:p-12 overflow-y-scroll">
+      <VForm v-if="giveaway.is_active" class="my-12" @submit.prevent="handleSubmit">
         <h3 class="text-2xl font-semibold mb-4">Basic Info</h3>
 
         <div class="flex flex-col space-y-6">
@@ -99,7 +99,7 @@
           />
 
           <TextareaField
-            label="Descrie your car / mod list / issues / etc"
+            label="Describe your car / mod list / issues / etc"
             v-model="form.car_info"
             :error-messages="form.errors.car_info"
           />
@@ -152,6 +152,25 @@
           Submit
         </VBtn>
       </VForm>
+
+      <div class="my-24 lg:mt-40" v-else>
+        <div class="flex flex-col space-y-6">
+          <p>
+            This giveaway runs from <span class="font-semibold">{{ giveaway.open_date }}</span> to
+            <span class="font-semibold">{{ giveaway.close_date }}</span>
+          </p>
+          <h3 class="text-5xl font-semibold mb-4 text-primary-500">Roads closed pizza boy!</h3>
+          <p class="text-xl opacity-75 lg:w-3/4">
+            You either dumped the clutch too early or you're granny-shifting, and not double
+            clutching like you should!
+          </p>
+
+          <p>
+            In the meantime, check out the
+            <a class="font-semibold underline" href="https://www.throtl.com">throtl Shop!</a>
+          </p>
+        </div>
+      </div>
     </section>
   </div>
 </template>
@@ -165,13 +184,20 @@ import TextField from '@/Components/Form/TextField.vue'
 import TextareaField from '@/Components/Form/TextareaField.vue'
 
 const props = defineProps({
-  giveaway: { type: Object, required: true }
+  giveaway: {
+    type: Object,
+    required: true
+  }
 })
 
 const imgSrc = computed(() => {
   return props.giveaway.image
     ? props.giveaway.image
     : 'https://i.pinimg.com/1200x/8e/47/aa/8e47aa3e621489a3f74a5edc34a1a7ab.jpg'
+})
+
+const giveaway = computed(() => {
+  return props.giveaway.data
 })
 
 const form = useForm({
@@ -189,11 +215,11 @@ const form = useForm({
   fav_episode: '',
   social_media: '',
   terms_of_service: false,
-  collection_id: props.giveaway.id
+  collection_id: giveaway.value.id
 })
 
 function handleSubmit() {
-  form.post(route('submissions.store', props.giveaway.id), {
+  form.post(route('submissions.store', giveaway.value.id), {
     onSuccess: () => {
       form.reset()
     }

@@ -12,12 +12,40 @@
     </template>
 
     <div>
-      <div v-if="giveaways && giveaways.length > 0">
+      <div v-if="giveaways && giveaways.data.length > 0">
         <ul class="grid grid-cols-4 gap-6">
-          <li v-for="giveaway in giveaways" :key="giveaway.id">
+          <li v-for="giveaway in giveaways.data" :key="giveaway.id">
             <Link :href="route('giveaways.edit', giveaway.id)" class="block">
-              <div>
-                {{ giveaway.name }}
+              <div class="drop-shadow-lg">
+                <div class="relative h-40 overflow-hidden">
+                  <div class="relative z-10 px-4 py-8 flex h-full items-end">
+                    <h3 class="text-white font-semibold text-lg">{{ giveaway.name }}</h3>
+                  </div>
+                  <div
+                    v-if="giveaway.is_active"
+                    class="text-xs absolute top-0 bg-primary-200 border border-primar-700 text-primary-700 p-1 rounded-full z-20 ml-4 mt-4"
+                  >
+                    Active
+                  </div>
+                  <img
+                    :src="giveaway.image_url"
+                    class="absolute w-full h-48 object-cover inset-0"
+                  />
+                  <div class="absolute inset-0 bg-black opacity-60"></div>
+                </div>
+                <footer class="bg-white p-4 flex justify-between items-center">
+                  <div>
+                    <p class="text-xs opacity-50">Enrollment Period</p>
+                    <p class="">{{ giveaway.open_date }} - {{ giveaway.close_date }}</p>
+                  </div>
+
+                  <div class="flex flex-col">
+                    <p class="text-xs opacity-50">Total Submissions</p>
+                    <p class="ml-auto text-primary-500 font-semibold">
+                      {{ giveaway.total_submissions }}
+                    </p>
+                  </div>
+                </footer>
               </div>
             </Link>
           </li>
