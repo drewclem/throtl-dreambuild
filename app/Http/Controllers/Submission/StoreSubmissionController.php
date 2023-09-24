@@ -11,6 +11,8 @@ class StoreSubmissionController extends Controller
 {
     public function __invoke(StoreSubmissionRequest $request)
     {
+        $collection = $request->collection();
+
         try {
 
             DB::transaction(function () use ($request) {
@@ -32,7 +34,7 @@ class StoreSubmissionController extends Controller
                     'terms_of_service' => $request->input('terms_of_service'),
                 ]);
             });
-            return redirect('/giveaways/' . $request->input('collection_id') . '/show?status=success');
+            return redirect('/giveaways/' . $collection->slug . '?status=success');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Something went wrong. Please try again.']);
         }

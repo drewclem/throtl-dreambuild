@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Collection;
 
 use App\Models\Collection;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,7 +12,8 @@ class UpdateCollectionController extends Controller
     public function __invoke(Request $request, Collection $collection)
     {
 
-        // dd($request);
+        $slug = Str::of($request->slug)->slug('-');
+
         $request->validate([
             'name' => 'required|string|max:255',
             'start' => 'nullable|date',
@@ -19,6 +21,7 @@ class UpdateCollectionController extends Controller
             'cta' => 'nullable|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'lowerBanner' => 'nullable|string|max:255',
+            'slug' => 'required|string|max:255|unique:collections,slug,' . $collection->id,
         ]);
 
         $collection->update([

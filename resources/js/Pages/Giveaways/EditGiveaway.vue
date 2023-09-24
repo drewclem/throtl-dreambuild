@@ -3,42 +3,55 @@
 
   <AuthenticatedLayout>
     <template #header>
-      <div class="flex align-baseline">
-        <Link href="/giveaways">
+      <div class="flex flex-col lg:flex-row align-baseline">
+        <Link :href="route('giveaways')">
           <h2 class="font-semibold text-4xl text-gray-800 leading-tight">Giveaways</h2>
         </Link>
 
-        <p class="text-xl ml-6">
-          ... / Edit /
+        <p class="text-xl lg:ml-6">
+          / Edit /
           <span class="text-primary-500">{{ giveaway.name }}</span>
         </p>
       </div>
     </template>
 
-    <section class="flex space-x-12">
-      <VTabs v-model="tab" direction="vertical">
-        <VTab hide-slider value="submissions">
+    <section class="flex flex-col lg:flex-row gap-6 lg:gap-12 w-full">
+      <div class="flex flex-col items-start">
+        <VBtn variant="plain" @click="updateActiveTab('submissions')">
           <VIcon
             icon="mdi-inbox"
             :class="tab === 'submissions' ? 'text-primary-500' : 'text-gray-300'"
           />
           <span class="ml-3">Submissions</span>
-        </VTab>
-        <VTab hide-slider value="settings">
+        </VBtn>
+
+        <VBtn variant="plain" @click="updateActiveTab('settings')">
           <VIcon
-            icon="mdi-cogs"
+            icon="mdi-cog"
             :class="tab === 'settings' ? 'text-primary-500' : 'text-gray-300'"
           />
           <span class="ml-3">Settings</span>
-        </VTab>
-      </VTabs>
+        </VBtn>
+
+        <VBtn variant="plain" @click="handleDelete">
+          <VIcon icon="mdi-delete" class="text-red-500" />
+          <span class="ml-3 text-red-500">Delete</span>
+        </VBtn>
+      </div>
       <div class="w-full">
-        <VWindow direction="vertical" v-model="tab">
+        <VWindow v-model="tab">
           <VWindowItem value="submissions">
             <div class="flex flex-col px-1 pb-4">
               <h3 class="text-2xl mb-9">Submissions</h3>
 
-              <SubmissionsTable :submissions="submissions.data" />
+              <div>
+                <SubmissionsTable
+                  :submissions="submissions.data"
+                  :giveawayId="giveaway.data.slug"
+                  :winnerId="giveaway.data.winner_id"
+                  :hasWinner="giveaway.data.has_winner"
+                />
+              </div>
             </div>
           </VWindowItem>
           <VWindowItem value="settings">
@@ -57,6 +70,15 @@
                           variant="underlined"
                           :error-messages="form.errors.name"
                           v-model="form.name"
+                        />
+                      </div>
+
+                      <div>
+                        <VTextField
+                          label="Name"
+                          variant="underlined"
+                          :error-messages="form.errors.slug"
+                          v-model="form.slug"
                         />
                       </div>
 
@@ -170,7 +192,7 @@
 
                       <a
                         class="block ml-auto pt-3 text-primary-500 underline"
-                        :href="route('giveaways.show', props.giveaway.id)"
+                        :href="route('giveaways.show', props.giveaway.slug)"
                         target="_blank"
                       >
                         <p>View</p>
@@ -212,12 +234,15 @@ const props = defineProps({
 
 const tab = ref('submissions')
 
-const { files, addFiles, removeFile } = useFileList()
+function updateActiveTab(value) {
+  tab.value = value
+}
 
-console.log(files.value)
+const { files, addFiles, removeFile } = useFileList()
 
 const form = useForm({
   name: props.giveaway.name,
+  slug: props.giveaway.slug,
   cta: props.giveaway.cta,
   subtitle: props.giveaway.subtitle,
   lowerBanner: props.giveaway.lowerBanner,
@@ -227,7 +252,7 @@ const form = useForm({
 })
 
 function handleUpdate() {
-  form.post(route('giveaways.update', props.giveaway.id), {
+  form.post(route('giveaways.update', props.giveaway.slug), {
     onFinish: () => {
       form.reset()
     }
@@ -238,5 +263,11 @@ function handleSelectDates(e) {
   Object.entries(e).forEach(([key, value]) => {
     form[key] = value
   })
+}
+
+function handleDelete() {
+  if (confirm('Are you sure you want to delete this giveaway?')) {
+    form.delete(route('giveaways.destroy', props.giveaway.slug))
+  }
 }
 </script>

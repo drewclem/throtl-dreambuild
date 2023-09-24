@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Collection;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -73,5 +74,10 @@ class StoreSubmissionRequest extends FormRequest
             'terms_of_service.required' => 'Terms of service must be accepted',
             'collection_id.unique' => 'A collection_id is required',
         ];
+    }
+
+    public function collection(): Collection
+    {
+        return Collection::findOrFail($this->input('collection_id'));
     }
 }

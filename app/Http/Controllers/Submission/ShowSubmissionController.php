@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Collection;
 use App\Models\Submission;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SubmissionResource;
 
 class ShowSubmissionController extends Controller
 {
@@ -13,7 +14,7 @@ class ShowSubmissionController extends Controller
     {
         return Inertia::render('Giveaways/ShowSubmission', [
             'giveaway' => $collection,
-            'submission' => $submission,
+            'submission' => SubmissionResource::make($submission),
         ]);
     }
 }

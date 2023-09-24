@@ -39,4 +39,9 @@ class Submission extends Model
     {
         return $this->belongsTo(Collection::class);
     }
+
+    public function isWinner(): bool
+    {
+        return $this->id === $this->collection->winner_id;
+    }
 }

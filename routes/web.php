@@ -13,7 +13,9 @@ use App\Http\Controllers\Collection\IndexCollectionController;
 use App\Http\Controllers\Collection\StoreCollectionController;
 use App\Http\Controllers\Submission\StoreSubmissionController;
 use App\Http\Controllers\Collection\UpdateCollectionController;
+use App\Http\Controllers\Collection\DestroyCollectionController;
 use App\Http\Controllers\Company\IndexCompanySettingsController;
+use App\Http\Controllers\Collection\SelectWinnerCollectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,15 +37,18 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::get('/giveaways/{collection}', ShowCollectionController::class)->name('giveaways.show');
+
+Route::middleware(['auth', 'verified'])->prefix('/admin')->group(function () {
     Route::get('/giveaways', IndexCollectionController::class)->name('giveaways');
     Route::post('/giveaways/store', StoreCollectionController::class)->name('giveaways.store');
     Route::get('/giveaways/{collection}/edit', EditCollectionController::class)->name('giveaways.edit');
     Route::post('/giveaways/{collection}/update', UpdateCollectionController::class)->name('giveaways.update');
-    Route::get('/giveaways/{collection}/show', ShowCollectionController::class)->name('giveaways.show');
+    Route::post('/giveaways/{collection}/select-winner', SelectWinnerCollectionController::class)->name('giveaways.select-winner');
+    Route::delete('/giveaways/{collection}/destroy', DestroyCollectionController::class)->name('giveaways.destroy');
 
     Route::post('/giveaways/{collection}/submissions', StoreSubmissionController::class)->name('submissions.store');
-    Route::get('/giveaways/{collection}/submission/{submission}/show', ShowSubmissionController::class)->name('submissions.show');
+    Route::get('/giveaways/{collection}/submissions/{submission}/show', ShowSubmissionController::class)->name('submissions.show');
 });
 
 Route::middleware('auth')->group(function () {

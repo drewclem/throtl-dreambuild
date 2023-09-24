@@ -17,14 +17,14 @@ class SubmissionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'collection_id' => $this->collection_id,
+            'collection_slug' => $this->collection->slug,
             'name' => $this->name,
             'email' => $this->email,
             'car' => $this->vehicle_year . ' ' . $this->vehicle_make . ' ' . $this->vehicle_model,
             'why' => $this->why,
             'throtl_username' => $this->throtl_username,
             'active_vip' => $this->active_vip,
-            'is_winner' => $this->is_winner,
+            'is_winner' => $this->isWinner(),
             'car_info' => $this->car_info,
             'dream_build' => $this->dream_build,
             'ig_post' => $this->ig_post,

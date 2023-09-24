@@ -28,6 +28,10 @@ class CollectionResource extends JsonResource
             'close_date' => Carbon::parse($this->close_date)->format('M d'),
             'image_url' => $this->image_url ?? 'https://i.pinimg.com/1200x/8e/47/aa/8e47aa3e621489a3f74a5edc34a1a7ab.jpg',
             'is_active' => $isActive,
+            'slug' => $this->slug,
+            'winner' => $this->winner,
+            'winner_id' => $this->winner_id,
+            'has_winner' => $this->winner_id !== null,
         ];
     }
 }

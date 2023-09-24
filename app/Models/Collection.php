@@ -23,12 +23,19 @@ class Collection extends Model
         'cta',
         'subtitle',
         'lowerBanner',
+        'slug',
+        'winner_id'
     ];
 
     protected $casts = [
         'open_date' => 'date',
         'close_date' => 'date',
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     public function submissions(): HasMany
     {

@@ -8,8 +8,8 @@
         </Link>
 
         <p class="text-xl ml-6">
-          ... / <Link :href="route('giveaways.edit', submission.collection_id)">Submissions</Link> /
-          <span class="text-primary-500">{{ submission.name }}</span>
+          / <Link :href="route('giveaways.edit', giveaway.slug)">Submissions</Link> /
+          <span class="text-primary-500">{{ submission.data.name }}</span>
         </p>
       </div>
     </template>
@@ -24,6 +24,10 @@ import { Head, Link } from '@inertiajs/inertia-vue3'
 
 defineProps({
   submission: {
+    type: Object,
+    required: true
+  },
+  giveaway: {
     type: Object,
     required: true
   }

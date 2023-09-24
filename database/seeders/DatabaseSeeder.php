@@ -6,8 +6,9 @@ namespace Database\Seeders;
 use App\Models\User;
 use Faker\Core\Number;
 use App\Models\Company;
-use App\Models\Submission;
 use App\Models\Collection;
+use App\Models\Submission;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Testing\WithFaker;
 
@@ -34,12 +35,16 @@ class DatabaseSeeder extends Seeder
 
         $number = new Number();
 
+        $collectionName = "Racer's Edge Giveaway" . $number->randomNumber(2, true);
+        $slug = Str::of($collectionName)->slug('-');
+
         $collection = Collection::factory()->create([
             'company_id' => $company->id,
             'name' => "Racer's Edge Giveaway" . $number->randomNumber(2, true),
             'cta' => 'Enter Now',
             'subtitle' => 'Enter to win a free car',
             'lowerBanner' => 'Enter to win a free car',
+            'slug' => $slug,
         ]);
 
         Submission::factory()->count(25)->create([

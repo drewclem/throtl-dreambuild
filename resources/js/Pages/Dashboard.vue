@@ -15,15 +15,15 @@
       <div v-if="giveaways && giveaways.data.length > 0">
         <ul class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
           <li v-for="giveaway in giveaways.data" :key="giveaway.id">
-            <Link :href="route('giveaways.edit', giveaway.id)" class="block">
-              <div class="drop-shadow-lg">
+            <Link :href="route('giveaways.edit', giveaway.slug)" class="block">
+              <div class="relative drop-shadow-lg">
                 <div class="relative h-40 overflow-hidden">
                   <div class="relative z-10 px-4 py-8 flex h-full items-end">
                     <h3 class="text-white font-semibold text-lg">{{ giveaway.name }}</h3>
                   </div>
                   <div
                     v-if="giveaway.is_active"
-                    class="text-xs absolute top-0 bg-primary-200 border border-primar-700 text-primary-700 p-1 rounded-full z-20 ml-4 mt-4"
+                    class="text-xs absolute top-0 bg-primary-200 border border-primary-700 text-primary-700 p-1 rounded-full z-20 ml-4 mt-4"
                   >
                     Active
                   </div>
@@ -33,7 +33,10 @@
                   />
                   <div class="absolute inset-0 bg-black opacity-60"></div>
                 </div>
-                <footer class="bg-white p-4 flex justify-between items-center">
+                <footer
+                  class="relative bg-white p-4 flex justify-between items-center"
+                  :class="{ 'pb-6': giveaway.has_winner }"
+                >
                   <div>
                     <p class="text-xs opacity-50">Enrollment Period</p>
                     <p class="">{{ giveaway.open_date }} - {{ giveaway.close_date }}</p>
@@ -44,6 +47,12 @@
                     <p class="ml-auto text-primary-500 font-semibold">
                       {{ giveaway.total_submissions }}
                     </p>
+                  </div>
+                  <div
+                    v-if="giveaway.has_winner"
+                    class="absolute bottom-0 left-0 right-0 p-0.5 pl-4 bg-primary-200"
+                  >
+                    <p class="text-primary-700 text-xs">Winner Chosen!</p>
                   </div>
                 </footer>
               </div>

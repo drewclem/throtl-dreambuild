@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Collection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CollectionResource;
 use App\Http\Resources\SubmissionResource;
 
 class EditCollectionController extends Controller
@@ -15,7 +16,7 @@ class EditCollectionController extends Controller
         $submissions = SubmissionResource::collection($collection->submissions);
 
         return Inertia::render('Giveaways/EditGiveaway', [
-            'giveaway' => $collection,
+            'giveaway' => CollectionResource::make($collection),
             'submissions' => $submissions,
         ]);
     }

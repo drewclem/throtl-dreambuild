@@ -21,7 +21,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="relative overflow-none">
+  <div class="relative">
     <div class="hidden lg:fixed inset-y-0 z-50 lg:flex w-[224px] flex-col">
       <div class="flex grow flex-col">
         <div class="flex">

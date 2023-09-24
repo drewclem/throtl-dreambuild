@@ -255,7 +255,8 @@ watch(
 )
 
 function handleSubmit() {
-  form.post(route('submissions.store', giveaway.value.id), {
+  // console.log(giveaway.value)
+  form.post(route('submissions.store', giveaway.value.slug), {
     preserveScroll: true
   })
 }

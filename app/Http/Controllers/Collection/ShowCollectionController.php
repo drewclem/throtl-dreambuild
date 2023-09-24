@@ -11,7 +11,6 @@ class ShowCollectionController extends Controller
 {
     public function __invoke(Collection $collection)
     {
-
         return Inertia::render('Giveaways/ShowGiveaway', [
             'giveaway' => CollectionResource::make($collection),
         ]);

@@ -30,7 +30,7 @@ class SubmissionFactory extends Factory
             'ig_post' => $this->faker->sentence,
             'fav_episode' => $this->faker->sentence,
             'social_media' => $this->faker->sentence,
-            'terms_of_service' => $this->faker->boolean,
+            'terms_of_service' => true,
         ];
     }
 }
