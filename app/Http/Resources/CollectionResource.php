@@ -32,6 +32,7 @@ class CollectionResource extends JsonResource
             'winner' => $this->winner,
             'winner_id' => $this->winner_id,
             'has_winner' => $this->winner_id !== null,
+            'color' => $this->color ?? '#ff4310',
         ];
     }
 }

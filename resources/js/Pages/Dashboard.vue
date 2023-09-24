@@ -13,7 +13,7 @@
 
     <div>
       <div v-if="giveaways && giveaways.data.length > 0">
-        <ul class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        <ul class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
           <li v-for="giveaway in giveaways.data" :key="giveaway.id">
             <Link :href="route('giveaways.edit', giveaway.slug)" class="block">
               <div class="relative drop-shadow-lg">

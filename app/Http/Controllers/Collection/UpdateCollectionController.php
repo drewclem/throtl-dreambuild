@@ -22,6 +22,7 @@ class UpdateCollectionController extends Controller
             'subtitle' => 'nullable|string|max:255',
             'lowerBanner' => 'nullable|string|max:255',
             'slug' => 'required|string|max:255|unique:collections,slug,' . $collection->id,
+            'color' => 'nullable|string|max:255',
         ]);
 
         $collection->update([
@@ -31,6 +32,7 @@ class UpdateCollectionController extends Controller
             'cta' => $request->cta,
             'subtitle' => $request->subtitle,
             'lowerBanner' => $request->lowerBanner,
+            'color' => $request->color,
         ]);
 
         if ($request->hasFile('image')) {

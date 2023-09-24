@@ -4,7 +4,10 @@
     <section class="lg:col-span-2 relative">
       <header class="relative z-20 flex w-full justify-between items-center pr-4 lg:pr-12">
         <div class="relative flex items-center justify-center w-32">
-          <div class="absolute inset-0 bg-primary-500 z-10 -skew-x-6 -ml-3" />
+          <div
+            class="absolute inset-0 z-10 -skew-x-6 -ml-3"
+            :style="`background-color: ${giveaway.color}`"
+          />
           <ApplicationLogo class="block h-32 w-auto fill-current text-white z-20" />
         </div>
 
@@ -15,7 +18,10 @@
             class="block text-white text-lg font-semibold italic uppercase tracking-wider"
             >Shop</a
           >
-          <div class="absolute left-0 right-0 bottom-0 h-4 bg-primary-500 -z-10 -skew-x-6" />
+          <div
+            class="absolute left-0 right-0 bottom-0 h-4 -z-10 -skew-x-6"
+            :style="`background-color: ${giveaway.color}`"
+          />
         </div>
       </header>
 
@@ -30,7 +36,10 @@
       <img :src="imgSrc" class="absolute inset-0 w-full h-full object-cover" />
       <div class="absolute inset-0 bg-black opacity-60"></div>
 
-      <div class="bg-primary-500 absolute bottom-0 left-0 right-0 py-1 px-12 text-white">
+      <div
+        class="absolute bottom-0 left-0 right-0 py-1 px-12 text-white"
+        :style="`background-color: ${giveaway.color}`"
+      >
         <p>{{ giveaway.lowerBanner }}</p>
       </div>
     </section>
@@ -38,7 +47,12 @@
       <div v-if="page.props.ziggy.query.status === 'success'">
         <div class="my-24 lg:mt-40">
           <div class="flex flex-col space-y-6">
-            <h3 class="text-5xl font-semibold mb-4 text-primary-500">Application accepted!</h3>
+            <h3
+              class="text-5xl font-semibold mb-4 text-primary-500"
+              :style="`color: ${giveaway.color}`"
+            >
+              Application accepted!
+            </h3>
             <p class="text-xl opacity-75 lg:w-3/4">
               We'll be reviewing all applications and selecting a winner soon!
             </p>
@@ -91,7 +105,7 @@
           />
         </div>
 
-        <hr class="text-primary-500 my-12" />
+        <hr class="my-12" :style="`color: ${giveaway.color}`" />
 
         <h3 class="text-2xl font-semibold my-4">Car Info</h3>
         <div class="flex flex-col space-y-6">
@@ -125,7 +139,7 @@
           />
         </div>
 
-        <hr class="text-primary-500 my-12" />
+        <hr class="my-12" :style="`color: ${giveaway.color}`" />
 
         <h3 class="text-2xl font-semibold my-4">Social Media</h3>
         <div class="flex flex-col space-y-6">
@@ -148,7 +162,7 @@
           />
         </div>
 
-        <hr class="text-primary-500 my-12" />
+        <hr class="my-12" :style="`color: ${giveaway.color}`" />
 
         <VCheckbox
           label="I Agree to the throtl Dream Build Rules"
@@ -173,7 +187,9 @@
             This giveaway runs from <span class="font-semibold">{{ giveaway.open_date }}</span> to
             <span class="font-semibold">{{ giveaway.close_date }}</span>
           </p>
-          <h3 class="text-5xl font-semibold mb-4 text-primary-500">Roads closed pizza boy!</h3>
+          <h3 class="text-5xl font-semibold mb-4" :style="`color: ${giveaway.color}`">
+            Roads closed pizza boy!
+          </h3>
           <p class="text-xl opacity-75 lg:w-3/4">
             You either dumped the clutch too early or you're granny-shifting, and not double
             clutching like you should!

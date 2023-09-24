@@ -24,6 +24,6 @@ class Company extends Model
 
     public function collections(): HasMany
     {
-        return $this->hasMany(Collection::class)->orderby('open_date', 'asc');
+        return $this->hasMany(Collection::class);
     }
 }

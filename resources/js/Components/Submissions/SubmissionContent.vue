@@ -1,5 +1,6 @@
 <template>
   <div class="overflow-x-hidden">
+    <h3 v-if="submission.is_winner" class="text-xl font-semibold text-primary-500 mb-4">Winner!</h3>
     <div class="flex flex-col space-y-8">
       <SubmissionContentGrid>
         <template #left> Name </template>

@@ -110,6 +110,11 @@
                       </div>
 
                       <div>
+                        <VColorPicker v-model="form.color" rounded="0" />
+                        <button type="button" @click="form.color = '#ff4310'">Reset</button>
+                      </div>
+
+                      <div>
                         <h4 class="opacity-60 mb-4">Add an Image</h4>
                         <FileUploader @files-dropped="addFiles" #default="{ dropZoneActive }">
                           <label
@@ -182,6 +187,7 @@
                           :cta="form.cta"
                           :subtitle="form.subtitle"
                           :lowerBanner="form.lowerBanner"
+                          :color="form.color"
                           :image="
                             files.length > 0
                               ? files[0].url
@@ -192,7 +198,7 @@
 
                       <a
                         class="block ml-auto pt-3 text-primary-500 underline"
-                        :href="route('giveaways.show', props.giveaway.slug)"
+                        :href="route('giveaways.show', props.giveaway.data.slug)"
                         target="_blank"
                       >
                         <p>View</p>
@@ -241,18 +247,19 @@ function updateActiveTab(value) {
 const { files, addFiles, removeFile } = useFileList()
 
 const form = useForm({
-  name: props.giveaway.name,
-  slug: props.giveaway.slug,
-  cta: props.giveaway.cta,
-  subtitle: props.giveaway.subtitle,
-  lowerBanner: props.giveaway.lowerBanner,
-  start: new Date(props.giveaway.open_date),
-  end: new Date(props.giveaway.close_date),
-  image: files
+  name: props.giveaway.data.name,
+  slug: props.giveaway.data.slug,
+  cta: props.giveaway.data.cta,
+  subtitle: props.giveaway.data.subtitle,
+  lowerBanner: props.giveaway.data.lowerBanner,
+  start: new Date(props.giveaway.data.open_date),
+  end: new Date(props.giveaway.data.close_date),
+  image: files,
+  color: props.giveaway.data.color ?? '#ff4310'
 })
 
 function handleUpdate() {
-  form.post(route('giveaways.update', props.giveaway.slug), {
+  form.post(route('giveaways.update', props.giveaway.data.slug), {
     onFinish: () => {
       form.reset()
     }
@@ -267,7 +274,7 @@ function handleSelectDates(e) {
 
 function handleDelete() {
   if (confirm('Are you sure you want to delete this giveaway?')) {
-    form.delete(route('giveaways.destroy', props.giveaway.slug))
+    form.delete(route('giveaways.destroy', props.giveaway.data.slug))
   }
 }
 </script>
