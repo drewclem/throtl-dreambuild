@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "28add47cbe67aa3200ed3f2efacb611e",
+    "content-hash": "b5dd85aabf5a544ece11c307e6656fd5",
     "packages": [
         {
             "name": "brick/math",
@@ -969,6 +969,74 @@
                 }
             ],
             "time": "2023-08-27T10:19:19+00:00"
+        },
+        {
+            "name": "illuminatech/validation-composite",
+            "version": "1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminatech/validation-composite.git",
+                "reference": "fe620de20be9aa6a2f115e84962f250dae742358"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminatech/validation-composite/zipball/fe620de20be9aa6a2f115e84962f250dae742358",
+                "reference": "fe620de20be9aa6a2f115e84962f250dae742358",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0"
+            },
+            "require-dev": {
+                "illuminate/validation": "*",
+                "phpunit/phpunit": "^7.5 || ^8.0 || ^9.3 || ^10.0.7"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminatech\\Validation\\Composite\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                }
+            ],
+            "description": "Allows uniting several validation rules into a single one for easy re-usage",
+            "keywords": [
+                "combine",
+                "composite",
+                "laravel",
+                "rule",
+                "validation",
+                "validator"
+            ],
+            "support": {
+                "issues": "https://github.com/illuminatech/validation-composite/issues",
+                "source": "https://github.com/illuminatech/validation-composite",
+                "wiki": "https://github.com/illuminatech/validation-composite/wiki"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/klimov-paul",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/klimov_paul",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2023-02-24T16:27:06+00:00"
         },
         {
             "name": "inertiajs/inertia-laravel",

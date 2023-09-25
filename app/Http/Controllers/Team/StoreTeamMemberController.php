@@ -3,43 +3,46 @@
 namespace App\Http\Controllers\Team;
 
 use App\Models\User;
-use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Models\CompanyTeamMember;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTeamMemberRequest;
 
 class StoreTeamMemberController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(StoreTeamMemberRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-        ]);
 
-        $company = $request->user()->company;
+        $companyTeamMember = $this->createCompanyTeamMember($request);
 
-        DB::transaction(function () use ($request, $company) {
+        return redirect()->back()->with('success', 'Team member added.');
+    }
+
+    private function createCompanyTeamMember(Request $request, bool $withTrashed = false): CompanyTeamMember
+    {
+        return DB::transaction(function () use ($request, $withTrashed) {
+            $company = $request->user()->company;
+
             $user = User::query()
-                ->forCompany($company)
-                ->whereEmail($request->email)
-                ->firstOr(function () use ($request) {
+                ->where('email', $request->email)
+                ->withTrashed()
+                ->firstOr(function () use ($request, $company) {
                     return User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => bcrypt('password'),
-                        'activation_stage' => 'invited',
+                        'company_id' => $company->id
                     ]);
                 });
 
-            CompanyTeamMember::firstOrCreate([
+            if ($user->trashed()) $user->restore();
+
+            return CompanyTeamMember::withTrashed($withTrashed)->firstOrCreate([
                 'company_id' => $company->id,
                 'user_id' => $user->id,
                 'role' => 'member',
             ]);
         });
-
-        return redirect()->back()->with('success', 'Team member added.');
     }
 }
