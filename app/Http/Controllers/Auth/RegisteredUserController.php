@@ -9,6 +9,7 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
+use App\Models\CompanyTeamMember;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
@@ -48,6 +49,12 @@ class RegisteredUserController extends Controller
 
             $company = Company::create([
                 'user_id' => $user->id
+            ]);
+
+            CompanyTeamMember::create([
+                'company_id' => $company->id,
+                'user_id' => $user->id,
+                'role' => 'owner',
             ]);
 
             $user->update([

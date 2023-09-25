@@ -10,6 +10,7 @@ use App\Models\Collection;
 use App\Models\Submission;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
+use App\Models\CompanyTeamMember;
 use Illuminate\Foundation\Testing\WithFaker;
 
 class DatabaseSeeder extends Seeder
@@ -26,11 +27,18 @@ class DatabaseSeeder extends Seeder
             'name' => "Brian O'Connor",
             'email' => 'brian@lapd.com',
             'password' => bcrypt('buster'),
+            'activation_stage' => 'active'
         ]);
 
         $company = Company::factory()->create([
             'user_id' => $user->id,
             'name' => "Racer's Edge",
+        ]);
+
+        CompanyTeamMember::factory()->create([
+            'company_id' => $company->id,
+            'user_id' => $user->id,
+            'role' => 'owner',
         ]);
 
         $number = new Number();
@@ -44,6 +52,8 @@ class DatabaseSeeder extends Seeder
             'cta' => 'Enter Now',
             'subtitle' => 'Enter to win a free car',
             'lowerBanner' => 'Enter to win a free car',
+            'open_date' => now()->subDays(3),
+            'close_date' => now()->addDays(10),
             'slug' => $slug,
         ]);
 

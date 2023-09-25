@@ -6,10 +6,13 @@ import DropdownLink from '@/Components/DropdownLink.vue'
 import NavLink from '@/Components/NavLink.vue'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
 import { Link } from '@inertiajs/vue3'
+import { usePage } from '@inertiajs/inertia-vue3'
 
 const showingNavigationDropdown = ref(false)
 
 const body = document.getElementsByTagName('body')
+
+const page = usePage()
 
 onMounted(() => {
   body[0].classList.add('overflow-y-hidden')
@@ -40,14 +43,14 @@ onUnmounted(() => {
                   icon="mdi-inbox-multiple"
                   class="mr-3"
                   :class="{
-                    'text-primary-500': route().current('giveaways'),
-                    'text-gray-300': !route().current('giveaways')
+                    'text-primary-500': $page.props.ziggy.location.includes('admin/giveaways'),
+                    'text-gray-300': !$page.props.ziggy.location.includes('admin/giveaways')
                   }"
                 />
                 Giveaways
               </NavLink>
 
-              <NavLink :href="route('form-settings')" :active="route().current('form-settings')">
+              <!-- <NavLink :href="route('form-settings')" :active="route().current('form-settings')">
                 <VIcon
                   icon="mdi-clipboard-text"
                   class="mr-3"
@@ -72,15 +75,15 @@ onUnmounted(() => {
                   }"
                 />
                 Company Settings
-              </NavLink>
+              </NavLink> -->
 
               <NavLink :href="route('team.index')" :active="route().current('team.index')">
                 <VIcon
                   icon="mdi-account-group"
                   class="mr-3"
                   :class="{
-                    'text-primary-500': route().current('team.index'),
-                    'text-gray-300': !route().current('team.index')
+                    'text-primary-500': $page.props.ziggy.location.includes('admin/team'),
+                    'text-gray-300': !$page.props.ziggy.location.includes('admin/team')
                   }"
                 />
                 Team

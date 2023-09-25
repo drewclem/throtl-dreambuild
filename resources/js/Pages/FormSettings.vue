@@ -11,10 +11,15 @@ import { Head } from '@inertiajs/vue3'
       <h2 class="font-semibold text-4xl text-gray-800 leading-tight">Form Settings</h2>
     </template>
 
-    <div class="py-12">
-      <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6 text-gray-900">You're logged in!</div>
-      </div>
-    </div>
+    <section>
+      <VExpansionPanels>
+        <VExpansionPanel color="primary" elevation="0" rounded="0">
+          <VExpansionPanelTitle>
+            <template #default>Accepted State</template>
+          </VExpansionPanelTitle>
+          <VExpansionPanelText> <p>hello</p> </VExpansionPanelText>
+        </VExpansionPanel>
+      </VExpansionPanels>
+    </section>
   </AuthenticatedLayout>
 </template>
