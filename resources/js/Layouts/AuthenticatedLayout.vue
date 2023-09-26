@@ -106,7 +106,7 @@ onUnmounted(() => {
                     'text-gray-300': !route().current('profile.edit')
                   }"
                 />
-                Profile
+                {{ $page.props.auth.user.name }}
               </NavLink>
               <NavLink :href="route('logout')" method="post" class="group">
                 <VIcon

@@ -29,6 +29,7 @@ class User extends Authenticatable
         'password',
         'id',
         'avatar',
+        'company_id'
     ];
 
     /**
@@ -74,5 +75,10 @@ class User extends Authenticatable
     public function isActive(): bool
     {
         return $this->activation_stage === 'active';
+    }
+
+    public function likes(): HasMany
+    {
+        return $this->hasMany(SubmissionLike::class);
     }
 }

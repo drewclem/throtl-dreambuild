@@ -184,8 +184,9 @@
       <div class="my-24 lg:mt-40" v-else>
         <div class="flex flex-col space-y-6">
           <p>
-            This giveaway runs from <span class="font-semibold">{{ giveaway.open_date }}</span> to
-            <span class="font-semibold">{{ giveaway.close_date }}</span>
+            This giveaway runs from
+            <span class="font-semibold">{{ giveaway.open_date_formatted }}</span> to
+            <span class="font-semibold">{{ giveaway.close_date_formatted }}</span>
           </p>
           <h3 class="text-5xl font-semibold mb-4" :style="`color: ${giveaway.color}`">
             Roads closed pizza boy!

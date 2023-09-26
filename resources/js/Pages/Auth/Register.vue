@@ -33,6 +33,7 @@ const submit = () => {
                 id="name"
                 label="Name"
                 type="text"
+                variant="underlined"
                 class="mt-1 block w-full"
                 v-model="form.name"
                 required
@@ -48,6 +49,7 @@ const submit = () => {
                 id="email"
                 label="email"
                 type="email"
+                variant="underlined"
                 class="mt-1 block w-full"
                 v-model="form.email"
                 required
@@ -62,6 +64,7 @@ const submit = () => {
                 id="password"
                 label="password"
                 type="password"
+                variant="underlined"
                 class="mt-1 block w-full"
                 v-model="form.password"
                 required
@@ -76,6 +79,7 @@ const submit = () => {
                 id="password_confirmation"
                 label="confirm password"
                 type="password"
+                variant="underlined"
                 class="mt-1 block w-full"
                 v-model="form.password_confirmation"
                 required

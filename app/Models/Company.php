@@ -17,6 +17,11 @@ class Company extends Model
         'user_id'
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function admin(): BelongsTo
     {
         return $this->belongsTo(User::class);

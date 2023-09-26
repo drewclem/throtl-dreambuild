@@ -20,25 +20,50 @@
       </button>
     </div>
     <div class="flex space-x-4 items-center">
-      <button class="relative rounded-full p-3 shadow-md group" type="button">
-        <div class="absolute inset-0 bg-white p-3 group-hover:bg-primary-200 rounded-full"></div>
-        <VIcon
-          icon="mdi-thumb-down"
-          color="primary"
-          variant="tonal"
-          class="text-gray-300 group-hover:text-primary-400 transform transition duration-150 ease-in-out"
-          size="small"
-        />
-      </button>
+      <div class="relative flex justify-center">
+        <button
+          class="rounded-full p-3 shadow-md group"
+          type="button"
+          @click="$emit('dislike', userLike)"
+        >
+          <div class="absolute inset-0 bg-white p-3 group-hover:bg-primary-200 rounded-full"></div>
+          <VIcon
+            icon="mdi-thumb-down"
+            variant="tonal"
+            :class="{
+              'text-gray-300': !userLike || userLike.value === 'like',
+              'text-primary-500': userLike && userLike.value === 'dislike'
+            }"
+            class="group-hover:text-primary-400 transform transition duration-150 ease-in-out"
+            size="small"
+          />
+        </button>
+        <span class="absolute text-center inset-0 mt-14 text-xs text-gray-300">
+          {{ submission.dislikes_amount }}
+        </span>
+      </div>
 
-      <button class="relative rounded-full p-3 shadow-md group" type="button">
-        <div class="absolute inset-0 bg-white p-3 group-hover:bg-primary-200 rounded-full"></div>
-        <VIcon
-          icon="mdi-thumb-up"
-          class="text-gray-300 group-hover:text-primary-400 transform transition duration-150 ease-in-out"
-          size="small"
-        />
-      </button>
+      <div class="relative">
+        <button
+          class="rounded-full p-3 shadow-md group"
+          type="button"
+          @click="$emit('like', userLike)"
+        >
+          <div class="absolute inset-0 bg-white p-3 group-hover:bg-primary-200 rounded-full"></div>
+          <VIcon
+            icon="mdi-thumb-up"
+            :class="{
+              'text-gray-300': !userLike || userLike.value === 'dislike',
+              'text-primary-500': userLike && userLike.value === 'like'
+            }"
+            class="group-hover:text-primary-400 transform transition duration-150 ease-in-out"
+            size="small"
+          />
+        </button>
+        <span class="absolute ml-auto text-center inset-0 mt-14 text-xs text-gray-300">
+          {{ submission.likes_amount }}
+        </span>
+      </div>
       <div>
         <VBtn
           color="primary"
@@ -55,7 +80,9 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   submission: {
     type: Object,
     required: true
@@ -71,6 +98,20 @@ defineProps({
   hasWinner: {
     type: Boolean,
     default: false
+  },
+  userId: {
+    type: Number,
+    default: null
   }
+})
+
+const hasLike = computed(() => {
+  return props.submission.likes_amount > 0
+})
+
+const userLike = computed(() => {
+  if (!hasLike) return null
+
+  return props.submission.likes.find((like) => like.user_id === props.userId) ?? null
 })
 </script>

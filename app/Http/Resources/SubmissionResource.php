@@ -32,6 +32,9 @@ class SubmissionResource extends JsonResource
             'social_media' => $this->social_media,
             'terms_of_service' => $this->terms_of_service,
             'created_at' => Carbon::parse($this->created_at)->format('M d'),
+            'likes' => $this->allLikes,
+            'likes_amount' => $this->likes->count(),
+            'dislikes_amount' => $this->dislikes->count(),
         ];
     }
 }

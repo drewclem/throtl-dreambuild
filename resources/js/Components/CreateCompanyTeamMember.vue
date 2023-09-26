@@ -32,6 +32,14 @@
               v-model="form.email"
               :error-messages="form.errors.email"
             />
+
+            <VTextField
+              variant="underlined"
+              label="Password"
+              type="password"
+              v-model="form.password"
+              :error-messages="form.errors.password"
+            />
           </VForm>
         </VCardText>
         <VCardActions>
@@ -66,7 +74,8 @@ function handleShowDialog() {
 
 const form = useForm({
   name: '',
-  email: ''
+  email: '',
+  password: ''
 })
 
 function handleCreateTeamMember() {

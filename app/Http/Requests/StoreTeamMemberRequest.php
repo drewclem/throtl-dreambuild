@@ -25,6 +25,7 @@ class StoreTeamMemberRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'email' => ['required', 'email', new UniqueTeamMemberEmail($this->user()->company, $this->user())],
+            'password' => 'required|min:8',
         ];
     }
 }

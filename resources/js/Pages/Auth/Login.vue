@@ -1,34 +1,3 @@
-<script setup>
-import Checkbox from '@/Components/Checkbox.vue'
-import GuestLayout from '@/Layouts/GuestLayout.vue'
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
-import TextInput from '@/Components/TextInput.vue'
-import { Head, Link, useForm } from '@inertiajs/vue3'
-
-defineProps({
-  canResetPassword: {
-    type: Boolean
-  },
-  status: {
-    type: String
-  }
-})
-
-const form = useForm({
-  email: '',
-  password: '',
-  remember: false
-})
-
-const submit = () => {
-  form.post(route('login'), {
-    onFinish: () => form.reset('password')
-  })
-}
-</script>
-
 <template>
   <GuestLayout>
     <Head title="Log in" />
@@ -39,11 +8,13 @@ const submit = () => {
 
     <VCard>
       <template #text>
-        <VContainer class="pa-10">
+        <VContainer class="pa-6">
+          <h1 class="text-2xl text-primary-500 font-semibold mb-6">Login</h1>
           <form @submit.prevent="submit">
             <div>
               <VTextField
                 label="email"
+                variant="underlined"
                 id="email"
                 type="email"
                 class="mt-1 block w-full"
@@ -60,6 +31,7 @@ const submit = () => {
               <VTextField
                 label="password"
                 id="password"
+                variant="underlined"
                 type="password"
                 class="mt-1 block w-full"
                 v-model="form.password"
@@ -81,7 +53,7 @@ const submit = () => {
               </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex w-full items-center justify-between mt-4">
               <Link
                 v-if="canResetPassword"
                 :href="route('password.request')"
@@ -90,13 +62,17 @@ const submit = () => {
                 Forgot your password?
               </Link>
 
-              <PrimaryButton
+              <VBtn
+                v-bind="props"
                 class="ml-4"
-                :class="{ 'opacity-25': form.processing }"
-                :disabled="form.processing"
+                color="primary"
+                variant="flat"
+                rounded="0"
+                type="submit"
+                :loading="form.processing"
               >
-                Log in
-              </PrimaryButton>
+                Log In
+              </VBtn>
             </div>
           </form>
         </VContainer>
@@ -104,3 +80,54 @@ const submit = () => {
     </VCard>
   </GuestLayout>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+import { Head, Link, useForm } from '@inertiajs/vue3'
+import LoginApi from '@/services/LoginApi'
+
+import Checkbox from '@/Components/Checkbox.vue'
+import GuestLayout from '@/Layouts/GuestLayout.vue'
+import InputError from '@/Components/InputError.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
+import TextInput from '@/Components/TextInput.vue'
+
+const props = defineProps({
+  canResetPassword: {
+    type: Boolean
+  },
+  status: {
+    type: String
+  },
+  company: {
+    type: Object,
+    default: () => ({})
+  }
+})
+
+const isLoading = ref(false)
+
+const form = useForm({
+  email: '',
+  password: '',
+  remember: false
+})
+
+const submit = () => {
+  form.post(route('login'), {
+    onFinish: () => form.reset('password')
+  })
+}
+
+function handleCheckEmail() {
+  isLoading.value = true
+  LoginApi.checkEmail(form.email, props.company.slug)
+    .then((res) => {
+      console.log(res)
+    })
+    .finally(() => {
+      isLoading.value = false
+    })
+}
+</script>

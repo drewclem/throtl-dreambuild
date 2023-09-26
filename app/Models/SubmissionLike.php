@@ -14,11 +14,17 @@ class SubmissionLike extends Model
 
     protected $fillable = [
         'submission_id',
-        'user_id'
+        'user_id',
+        'value'
     ];
 
     public function submission(): HasOne
     {
         return $this->hasOne(Submission::class);
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class);
     }
 }

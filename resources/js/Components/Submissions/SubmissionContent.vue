@@ -59,34 +59,6 @@
 
     <div class="flex flex-col space-y-8">
       <SubmissionContentGrid>
-        <template #left> Car </template>
-
-        <template #right>
-          {{ submission.car }}
-        </template>
-      </SubmissionContentGrid>
-
-      <SubmissionContentGrid>
-        <template #left> Describe your car / mod list/ issues / etc </template>
-
-        <template #right>
-          {{ submission.car_info }}
-        </template>
-      </SubmissionContentGrid>
-
-      <SubmissionContentGrid>
-        <template #left> Describe your DREAM Build & Mod List! (In Detail) </template>
-
-        <template #right>
-          {{ submission.dream_build }}
-        </template>
-      </SubmissionContentGrid>
-    </div>
-
-    <hr class="my-12" />
-
-    <div class="flex flex-col space-y-8">
-      <SubmissionContentGrid>
         <template #left> IG Post/Reel </template>
 
         <template #right>

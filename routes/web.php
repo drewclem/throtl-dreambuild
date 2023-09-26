@@ -17,10 +17,13 @@ use App\Http\Controllers\Collection\IndexCollectionController;
 use App\Http\Controllers\Collection\StoreCollectionController;
 use App\Http\Controllers\Submission\StoreSubmissionController;
 use App\Http\Controllers\Collection\UpdateCollectionController;
-use App\Http\Controllers\Collection\DestroyCollectionImageController;
 use App\Http\Controllers\Collection\DestroyCollectionController;
 use App\Http\Controllers\Company\IndexCompanySettingsController;
+use App\Http\Controllers\Submission\StoreSubmissionLikeController;
+use App\Http\Controllers\Submission\DestroySubmissionLikeController;
+use App\Http\Controllers\Collection\DestroyCollectionImageController;
 use App\Http\Controllers\Collection\SelectWinnerCollectionController;
+use App\Http\Controllers\Submission\UpdateSubmissionLikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +58,10 @@ Route::middleware(['auth', 'verified'])->prefix('/admin')->group(function () {
 
     Route::post('/giveaways/{collection}/submissions', StoreSubmissionController::class)->name('submissions.store');
     Route::get('/giveaways/{collection}/submissions/{submission}/show', ShowSubmissionController::class)->name('submissions.show');
+
+    Route::put('/{submission}/like', StoreSubmissionLikeController::class)->name('submission.like');
+    Route::put('/like/{submissionLike}/update', UpdateSubmissionLikeController::class)->name('submission.like-update');
+    Route::delete('/like/{submissionLike}/delete', DestroySubmissionLikeController::class)->name('submission.dislike');
 
     Route::post('/team', StoreTeamMemberController::class)->name('team.store');
     Route::get('/team', IndexTeamController::class)->name('team.index');

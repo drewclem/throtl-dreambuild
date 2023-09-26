@@ -50,6 +50,7 @@
                   :giveawayId="giveaway.data.slug"
                   :winnerId="giveaway.data.winner_id"
                   :hasWinner="giveaway.data.has_winner"
+                  :userId="auth.user.id"
                 />
               </div>
             </div>
@@ -245,6 +246,10 @@ const props = defineProps({
   submissions: {
     type: Array,
     default: () => []
+  },
+  auth: {
+    type: Object,
+    default: () => ({})
   }
 })
 

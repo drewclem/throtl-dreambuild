@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
         $company = Company::factory()->create([
             'user_id' => $user->id,
             'name' => "Racer's Edge",
+            'slug' => Str::of("Racer's Edge")->slug('-'),
         ]);
 
         CompanyTeamMember::factory()->create([

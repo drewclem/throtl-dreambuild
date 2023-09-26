@@ -30,10 +30,16 @@ class StoreTeamMemberController extends Controller
                     return User::create([
                         'name' => $request->name,
                         'email' => $request->email,
-                        'password' => bcrypt('password'),
+                        'password' => bcrypt($request->password),
                         'company_id' => $company->id
                     ]);
                 });
+
+            if ($user) {
+                $user->update([
+                    'company_id' => $company->id
+                ]);
+            }
 
             if ($user->trashed()) $user->restore();
 

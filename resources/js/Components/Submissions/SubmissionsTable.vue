@@ -44,8 +44,11 @@
             :isStart="isStart"
             :isEnd="isEnd"
             :hasWinner="hasWinner"
+            :userId="userId"
             @prev="handlePrevClick"
             @next="handleNextClick"
+            @like="handleLike"
+            @dislike="handleDislike"
             @selectWinner="handleSelectWinner"
           />
 
@@ -58,10 +61,12 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useForm } from '@inertiajs/vue3'
+import { Inertia } from '@inertiajs/inertia'
+
 import SubmissionCard from '@/Components/Submissions/SubmissionCard.vue'
 import SubmissionContent from '@/Components/Submissions/SubmissionContent.vue'
 import SubmissionActions from '@/Components/Submissions/SubmissionActions.vue'
-import { useForm } from '@inertiajs/vue3'
 
 const props = defineProps({
   submissions: {
@@ -79,6 +84,10 @@ const props = defineProps({
   hasWinner: {
     type: Boolean,
     default: false
+  },
+  userId: {
+    type: Number,
+    default: null
   }
 })
 
@@ -113,6 +122,46 @@ function handleNextClick() {
 function handlePrevClick() {
   if (activeSubmissionIndex.value > 0) {
     activeSubmissionIndex.value--
+  }
+}
+
+function handleLike(like) {
+  const submissionId = props.submissions[activeSubmissionIndex.value].id
+
+  if (!like) {
+    Inertia.put(route('submission.like', { submission: submissionId, value: 'like' }), {
+      preserveScroll: true
+    })
+  } else if (like.value === 'like') {
+    Inertia.delete(route('submission.dislike', { submissionLike: like.id }), {
+      preserveScroll: true
+    })
+  } else {
+    Inertia.put(route('submission.like-update', { submissionLike: like.id, value: 'like' }), {
+      preserveScroll: true
+    })
+  }
+}
+
+function handleDislike(like) {
+  if (!like) {
+    Inertia.put(
+      route('submission.like', {
+        submission: props.submissions[activeSubmissionIndex.value].id,
+        value: 'dislike'
+      }),
+      {
+        preserveScroll: true
+      }
+    )
+  } else if (like.value === 'dislike') {
+    Inertia.delete(route('submission.dislike', { submissionLike: like.id }), {
+      preserveScroll: true
+    })
+  } else {
+    Inertia.put(route('submission.like-update', { submissionLike: like.id, value: 'dislike' }), {
+      preserveScroll: true
+    })
   }
 }
 

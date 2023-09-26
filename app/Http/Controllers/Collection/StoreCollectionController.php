@@ -26,7 +26,7 @@ class StoreCollectionController extends Controller
                 'open_date' => $request->start,
                 'close_date' => $request->end,
                 'slug' => $slugifiedName,
-                'company_id' => $request->user()->company->id,
+                'company_id' => $request->user()->companyMember->company_id,
             ]);
         });
     }
