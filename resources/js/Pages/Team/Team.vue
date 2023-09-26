@@ -13,16 +13,31 @@
 
     <section>
       <div class="grid grid-cols-10 text-sm opacity-50 pl-8 pr-6 mb-6">
+        <div />
         <p class="col-span-2">Name</p>
         <p class="col-span-3">Email</p>
         <p class="col-span-2">Role</p>
         <p class="ml-auto">Status</p>
-        <p class="col-span-2 ml-auto">Actions</p>
+        <p class="ml-auto">Actions</p>
       </div>
 
       <ul class="flex flex-col space-y-4">
         <li v-for="member in teamMembers.data" :key="member.id">
           <div class="grid grid-cols-10 bg-white shadow-md px-6 py-3 items-center">
+            <div class="h-16 w-16 rounded-full overflow-hidden">
+              <img
+                v-if="member.user.avatar"
+                :src="member.user.avatar"
+                class="h-16 w-16 object-cover"
+              />
+
+              <div
+                v-else
+                class="h-16 w-16 flex items-center justify-center text-white text-2xl font-semibold bg-primary-200"
+              >
+                <VIcon icon="mdi-account" color="primary" />
+              </div>
+            </div>
             <p class="col-span-2 font-semibold">{{ member.user.name }}</p>
             <p class="col-span-3 opacity-75">{{ member.user.email }}</p>
             <p class="col-span-2 opacity-75">{{ member.role }}</p>
@@ -36,7 +51,7 @@
                 >{{ member.user.activation_stage }}</span
               >
             </p>
-            <div class="col-span-2 ml-auto flex gap-3">
+            <div class="ml-auto flex gap-3">
               <Link
                 class="opacity-75 hover:opacity-100 transition-opacity duration-150"
                 :href="route('team.edit', member)"

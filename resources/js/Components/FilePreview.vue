@@ -1,7 +1,11 @@
 <script setup>
 defineProps({
   file: { type: Object, required: true },
-  tag: { type: String, default: 'li' }
+  tag: { type: String, default: 'li' },
+  showDelete: {
+    type: Boolean,
+    default: false
+  }
 })
 
 defineEmits(['remove'])
@@ -10,6 +14,7 @@ defineEmits(['remove'])
 <template>
   <div class="relative overflow-hidden">
     <button
+      v-if="showDelete"
       @click="$emit('remove', file)"
       class="absolute bg-primary-500 text-white p-0.5 left-0"
       aria-label="Remove"

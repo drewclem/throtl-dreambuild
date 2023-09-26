@@ -16,6 +16,6 @@ class DestroyTeamMemberController extends Controller
             $companyTeamMember->user->delete();
         });
 
-        return redirect()->back();
+        return redirect(route('team.index'));
     }
 }

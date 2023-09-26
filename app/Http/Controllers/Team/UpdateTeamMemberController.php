@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Team;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\CompanyTeamMember;
+use App\Http\Controllers\Controller;
 
 class UpdateTeamMemberController extends Controller
 {
@@ -18,6 +19,18 @@ class UpdateTeamMemberController extends Controller
         $companyTeamMember->user->update(
             $request->only('name', 'email')
         );
+
+        if ($request->hasFile('avatar')) {
+            $imagePath = $request->file('avatar')->storeAs(
+                'avatars',
+                'img-' . Str::random(8) . '.' . $request->file('avatar')->getClientOriginalExtension(),
+                'public'
+            );
+
+            $companyTeamMember->user->update([
+                'avatar' => '/' . $imagePath,
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Team member updated.');
     }

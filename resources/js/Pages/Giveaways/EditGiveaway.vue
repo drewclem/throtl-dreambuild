@@ -120,6 +120,7 @@
                             url: form.image_url,
                             file: { name: form.image, alt: 'Giveaway Image' }
                           }"
+                          showDelete
                           @remove="handleDeleteImage"
                         />
 
@@ -156,6 +157,7 @@
                           <FilePreview
                             v-if="files.length > 0"
                             :file="files[0]"
+                            showDelete
                             @remove="removeFile"
                           />
                         </FileUploader>
