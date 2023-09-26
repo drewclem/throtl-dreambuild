@@ -36,7 +36,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
                 'company' => $request->user()?->company,
-                'member' => CompanyTeamMemberResource::make($request->user()?->companyMember),
+                'member' => $request->user() ? CompanyTeamMemberResource::make($request->user()?->companyMember) : null,
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

@@ -6,7 +6,7 @@
       <div class="flex justify-between items-center">
         <h2 class="font-semibold text-2xl lg:text-4xl text-gray-800 leading-tight">Team</h2>
         <div>
-          <CreateCompanyTeamMember :companyId="$page.props.auth.user.company.id" />
+          <CreateCompanyTeamMember :companyId="$page.props.auth.user.company_member.company_id" />
         </div>
       </div>
     </template>

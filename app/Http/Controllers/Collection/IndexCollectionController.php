@@ -14,7 +14,7 @@ class IndexCollectionController extends Controller
         $user = $request->user();
 
         return Inertia::render('Dashboard', [
-            'giveaways' => CollectionResource::collection($user->company->collections),
+            'giveaways' => CollectionResource::collection($user->companyMember->company->collections),
         ]);
     }
 }

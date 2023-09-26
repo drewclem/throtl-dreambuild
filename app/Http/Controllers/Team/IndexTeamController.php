@@ -11,7 +11,7 @@ class IndexTeamController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $members = $request->user()->company->members;
+        $members = $request->user()->companyMember->company->members;
 
         return Inertia::render('Team/Team', [
             'teamMembers' => CompanyTeamMemberResource::collection($members)

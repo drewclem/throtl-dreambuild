@@ -92,7 +92,13 @@ onUnmounted(() => {
 
             <div class="flex flex-col space-y-3">
               <NavLink :href="route('profile.edit')" :active="route().current('profile.edit')">
+                <img
+                  v-if="$page.props.auth.user.avatar"
+                  :src="$page.props.auth.user.avatar"
+                  class="h-8 w-8 rounded-full mr-3"
+                />
                 <VIcon
+                  v-else
                   icon="mdi-account"
                   class="mr-3"
                   :class="{
