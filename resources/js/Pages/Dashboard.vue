@@ -28,7 +28,10 @@
                     Active
                   </div>
                   <img
-                    :src="giveaway.image_url"
+                    :src="
+                      giveaway.image_url ??
+                      'https://i.pinimg.com/1200x/8e/47/aa/8e47aa3e621489a3f74a5edc34a1a7ab.jpg'
+                    "
                     class="absolute w-full h-48 object-cover inset-0"
                   />
                   <div class="absolute inset-0 bg-black opacity-60"></div>
@@ -39,7 +42,9 @@
                 >
                   <div>
                     <p class="text-xs opacity-50">Enrollment Period</p>
-                    <p class="">{{ giveaway.open_date }} - {{ giveaway.close_date }}</p>
+                    <p class="">
+                      {{ giveaway.open_date_formatted }} - {{ giveaway.close_date_formatted }}
+                    </p>
                   </div>
 
                   <div class="flex flex-col">

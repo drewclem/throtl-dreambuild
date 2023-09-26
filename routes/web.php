@@ -5,7 +5,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Team\IndexTeamController;
+use App\Http\Controllers\Team\EditTeamMemberController;
+use App\Http\Controllers\Team\StoreTeamMemberController;
+use App\Http\Controllers\Team\UpdateTeamMemberController;
 use App\Http\Controllers\Form\IndexFormSettingsController;
+use App\Http\Controllers\Team\DestroyTeamMemberController;
 use App\Http\Controllers\Collection\EditCollectionController;
 use App\Http\Controllers\Collection\ShowCollectionController;
 use App\Http\Controllers\Submission\ShowSubmissionController;
@@ -13,12 +17,10 @@ use App\Http\Controllers\Collection\IndexCollectionController;
 use App\Http\Controllers\Collection\StoreCollectionController;
 use App\Http\Controllers\Submission\StoreSubmissionController;
 use App\Http\Controllers\Collection\UpdateCollectionController;
+use App\Http\Controllers\Collection\DestroyCollectionImageController;
 use App\Http\Controllers\Collection\DestroyCollectionController;
 use App\Http\Controllers\Company\IndexCompanySettingsController;
 use App\Http\Controllers\Collection\SelectWinnerCollectionController;
-use App\Http\Controllers\Team\DestroyTeamMemberController;
-use App\Http\Controllers\Team\EditTeamMemberController;
-use App\Http\Controllers\Team\StoreTeamMemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +51,7 @@ Route::middleware(['auth', 'verified'])->prefix('/admin')->group(function () {
     Route::post('/giveaways/{collection}/update', UpdateCollectionController::class)->name('giveaways.update');
     Route::post('/giveaways/{collection}/select-winner', SelectWinnerCollectionController::class)->name('giveaways.select-winner');
     Route::delete('/giveaways/{collection}/destroy', DestroyCollectionController::class)->name('giveaways.destroy');
+    Route::post('/giveaways/{collection}/delete-image', DestroyCollectionImageController::class)->name('giveaways.delete-image');
 
     Route::post('/giveaways/{collection}/submissions', StoreSubmissionController::class)->name('submissions.store');
     Route::get('/giveaways/{collection}/submissions/{submission}/show', ShowSubmissionController::class)->name('submissions.show');
@@ -56,6 +59,7 @@ Route::middleware(['auth', 'verified'])->prefix('/admin')->group(function () {
     Route::post('/team', StoreTeamMemberController::class)->name('team.store');
     Route::get('/team', IndexTeamController::class)->name('team.index');
     Route::get('/team/{companyTeamMember}/edit', EditTeamMemberController::class)->name('team.edit');
+    Route::post('/team/{companyTeamMember}/update', UpdateTeamMemberController::class)->name('team.update');
     Route::delete('/team/{companyTeamMember}/destroy', DestroyTeamMemberController::class)->name('team.destroy');
 
     Route::get('/company-settings', IndexCompanySettingsController::class)->name('company-settings');

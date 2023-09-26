@@ -6,6 +6,13 @@ const emit = defineEmits(['files-dropped'])
 let active = ref(false)
 let inactiveTimeout = null
 
+defineProps({
+  rounded: {
+    type: Boolean,
+    default: false
+  }
+})
+
 function setActive() {
   active.value = true
   clearTimeout(inactiveTimeout)
@@ -58,6 +65,7 @@ onUnmounted(() => {
 .drop-area {
   @apply text-center border border-dashed border-gray-300;
   min-height: 150px;
+  max-height: 250px;
 
   display: flex;
   justify-content: center;

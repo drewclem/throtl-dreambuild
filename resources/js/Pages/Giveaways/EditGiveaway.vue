@@ -75,15 +75,6 @@
 
                       <div>
                         <VTextField
-                          label="Name"
-                          variant="underlined"
-                          :error-messages="form.errors.slug"
-                          v-model="form.slug"
-                        />
-                      </div>
-
-                      <div>
-                        <VTextField
                           label="CTA"
                           variant="underlined"
                           :error-messages="form.errors.cta"
@@ -115,11 +106,31 @@
                       </div>
 
                       <div>
-                        <h4 class="opacity-60 mb-4">Add an Image</h4>
-                        <FileUploader @files-dropped="addFiles" #default="{ dropZoneActive }">
+                        <h4 class="opacity-60 mb-4">
+                          {{ form.image_url ? 'Update image' : 'Add an Image' }}
+                        </h4>
+                        <FilePreview
+                          v-if="
+                            files.length === 0 &&
+                            form.image_url &&
+                            form.image_url !==
+                              'https://i.pinimg.com/1200x/8e/47/aa/8e47aa3e621489a3f74a5edc34a1a7ab.jpg'
+                          "
+                          :file="{
+                            url: form.image_url,
+                            file: { name: form.image, alt: 'Giveaway Image' }
+                          }"
+                          @remove="handleDeleteImage"
+                        />
+
+                        <FileUploader
+                          v-else
+                          @files-dropped="onInputChange"
+                          #default="{ dropZoneActive }"
+                        >
                           <label
                             class="text-sm"
-                            :class="files.length > 0 ? 'hidden' : ''"
+                            :class="files.length > 0 ? 'absolute h-0 w-0 opacity-0' : ''"
                             for="file-input"
                           >
                             <span v-if="dropZoneActive">
@@ -188,11 +199,7 @@
                           :subtitle="form.subtitle"
                           :lowerBanner="form.lowerBanner"
                           :color="form.color"
-                          :image="
-                            files.length > 0
-                              ? files[0].url
-                              : 'https://i.pinimg.com/1200x/8e/47/aa/8e47aa3e621489a3f74a5edc34a1a7ab.jpg'
-                          "
+                          :image="previewImage"
                         />
                       </div>
 
@@ -216,9 +223,10 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { Link, Head, useForm } from '@inertiajs/vue3'
 import useFileList from '@/utils/file-list'
+import { Inertia } from '@inertiajs/inertia'
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import FileUploader from '@/Components/FileUploader.vue'
@@ -254,8 +262,20 @@ const form = useForm({
   lowerBanner: props.giveaway.data.lowerBanner,
   start: new Date(props.giveaway.data.open_date),
   end: new Date(props.giveaway.data.close_date),
-  image: files,
+  image_url: props.giveaway.data.image_url,
+  file: null,
   color: props.giveaway.data.color ?? '#ff4310'
+})
+
+const previewImage = computed(() => {
+  if (form.image_url !== null) return form.image_url
+
+  if (form.image_url === null && files.length === 0)
+    return 'https://i.pinimg.com/1200x/8e/47/aa/8e47aa3e621489a3f74a5edc34a1a7ab.jpg'
+
+  return files.length > 0
+    ? files[0].url
+    : 'https://i.pinimg.com/1200x/8e/47/aa/8e47aa3e621489a3f74a5edc34a1a7ab.jpg'
 })
 
 function handleUpdate() {
@@ -276,5 +296,16 @@ function handleDelete() {
   if (confirm('Are you sure you want to delete this giveaway?')) {
     form.delete(route('giveaways.destroy', props.giveaway.data.slug))
   }
+}
+
+function handleDeleteImage() {
+  console.log('delete')
+  Inertia.post(route('giveaways.delete-image', props.giveaway.data.slug))
+}
+
+function onInputChange(e) {
+  addFiles(e)
+  form.file = e
+  e = null
 }
 </script>

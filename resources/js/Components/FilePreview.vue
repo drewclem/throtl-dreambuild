@@ -8,7 +8,7 @@ defineEmits(['remove'])
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative overflow-hidden">
     <button
       @click="$emit('remove', file)"
       class="absolute bg-primary-500 text-white p-0.5 left-0"

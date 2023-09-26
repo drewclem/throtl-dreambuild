@@ -4,9 +4,9 @@
 
     <div class="relative mb-3">
       <input
-        v-bind="$attrs"
         :id="id"
         :name="id"
+        :value="modelValue"
         class="border-b border-gray-300 p-2 flex w-full"
         @input="$emit('update:modelValue', $event.target.value)"
         @focus="() => (errorMessages = null)"

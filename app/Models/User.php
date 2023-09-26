@@ -60,6 +60,11 @@ class User extends Authenticatable
         return $this->hasOne(Company::class);
     }
 
+    public function companyMember(): HasOne
+    {
+        return $this->hasOne(CompanyTeamMember::class);
+    }
+
     public function scopeForCompany(Builder $query, ?Company $company): void
     {
         $query->where('company_id', $company?->id);

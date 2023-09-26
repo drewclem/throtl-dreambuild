@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\CompanyTeamMemberResource;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -34,6 +35,8 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'company' => $request->user()?->company,
+                'member' => CompanyTeamMemberResource::make($request->user()?->companyMember),
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

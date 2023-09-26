@@ -6,14 +6,12 @@ use App\Models\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class UpdateCollectionController extends Controller
 {
     public function __invoke(Request $request, Collection $collection)
     {
-
-        $slug = Str::of($request->slug)->slug('-');
-
         $request->validate([
             'name' => 'required|string|max:255',
             'start' => 'nullable|date',
@@ -25,21 +23,30 @@ class UpdateCollectionController extends Controller
             'color' => 'nullable|string|max:255',
         ]);
 
-        $collection->update([
-            'name' => $request->name,
-            'open_date' => $request->start,
-            'close_date' => $request->end,
-            'cta' => $request->cta,
-            'subtitle' => $request->subtitle,
-            'lowerBanner' => $request->lowerBanner,
-            'color' => $request->color,
-        ]);
-
-        if ($request->hasFile('image')) {
+        DB::transaction(function () use ($request, $collection) {
             $collection->update([
-                'image' => $request->file('image')->store('public/collections')
+                'name' => $request->name,
+                'open_date' => $request->start,
+                'close_date' => $request->end,
+                'cta' => $request->cta,
+                'subtitle' => $request->subtitle,
+                'lowerBanner' => $request->lowerBanner,
+                'color' => $request->color,
             ]);
-        }
+
+            if ($request->hasFile('file')) {
+                $imagePath = $request->file('file')[0]->storeAs(
+                    'images',
+                    'img-' . Str::random(8) . '.' . $request->file('file')[0]->getClientOriginalExtension(),
+                    'public'
+                );
+
+                $collection->update([
+                    'image_url' => '/' . $imagePath
+                ]);
+            }
+        });
+
 
         return redirect()->route('giveaways.edit', $collection)->with('success', 'Collection updated.');
     }

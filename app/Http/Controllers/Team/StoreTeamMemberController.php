@@ -13,7 +13,6 @@ class StoreTeamMemberController extends Controller
 {
     public function __invoke(StoreTeamMemberRequest $request)
     {
-
         $companyTeamMember = $this->createCompanyTeamMember($request);
 
         return redirect()->back()->with('success', 'Team member added.');

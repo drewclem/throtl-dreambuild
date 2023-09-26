@@ -18,6 +18,7 @@ class CompanyTeamMemberResource extends JsonResource
             'id' => $this->id,
             'user' => $this->user,
             'role' => $this->role,
+            'isOwner' => $this->role === 'owner',
             'isActive' => $this->user->activation_stage === 'active',
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at

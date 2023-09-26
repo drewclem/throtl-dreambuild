@@ -25,7 +25,8 @@ class Collection extends Model
         'lowerBanner',
         'slug',
         'winner_id',
-        'color'
+        'color',
+        'image_url'
     ];
 
     protected $casts = [
